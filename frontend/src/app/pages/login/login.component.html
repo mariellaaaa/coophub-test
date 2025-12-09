@@ -1,0 +1,101 @@
+<div class="login">
+	<section class="login__left">
+		<div class="login-left__top">
+			<img src="assets/images/logo.png" alt="CoopHub" class="logo"/>
+		</div>
+		<div class="login-left__text">
+			<h1>Accès à votre espace Coophub</h1>
+			<p>
+				Votre compte sociétaire est accessible sur la plateforme sécurisée de souscription CoopHub.eu.
+        		Vous accédez à l'ensemble de vos informations et préférences : coordonnées, transactions, certificats, etc.
+        		Et pouvez mettre à jour vos informations personnelles.
+			</p>
+			<img src="assets/images/image1.png" alt="Illustration 1" class="illustration--front" />
+			<img src="assets/images/image2.png" alt="Illustration 2" class="illustration--back" />
+		</div>
+	</section>
+
+	<section class="login__right">
+		<div class="login-header">
+			<a href="#" class="login-header__contact">Contactez-nous</a>
+			<span class="login-header__separator">|</span>
+		
+			<div class="login-header__lang" (click)="toggleLanguageMenu()">
+				{{ currentLanguage }}
+				<span class="arrow" [class.arrow--open]="languageMenuOpen">▼</span>
+			  
+				@if (languageMenuOpen) {
+					<ul class="language-menu">
+						<li (click)="setLanguage('Français')">Français</li>
+						<li (click)="setLanguage('English')">English</li>
+				  	</ul>
+				}
+			</div>			  
+		</div>
+			
+		<div class="login-wrapper">
+			<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+				<h2 class="login-form__title">Accès à votre espace</h2>
+				<p class="login-form__subtitle">
+					Pas encore de compte ?
+					<a href="#">S'enregistrer</a>
+				</p>
+	  
+				<div class="login-form__group">
+					<label class="login-form__label" for="identifier">
+						Adresse email ou nom d'utilisateur
+					</label>
+					<input
+						id="mail_or_username"
+						class="login-form__input"
+						type="text"
+						formControlName="mail_or_username"
+					/>
+				
+					@if (mail_or_username?.hasError('required') && mail_or_username?.touched) {
+						<span class="login-form__error">Ce champ est obligatoire.</span>
+					}
+				</div>
+		
+				<div class="login-form__group">
+					<label class="login-form__label" for="password">Mot de passe</label>
+					<input
+						id="password"
+						class="login-form__input"
+						type="password"
+						formControlName="password"
+					/>
+				
+					@if (password?.hasError('required') && password?.touched) {
+						<span class="login-form__error">Ce champ est obligatoire.</span>
+					}
+				</div>
+	  
+				<button
+					class="login-form__submit"
+					type="submit"
+					[disabled]="isSubmitting || loginForm.invalid"
+				>
+					{{ isSubmitting ? 'Connexion…' : 'ME CONNECTER' }}
+				</button>
+			
+				<a href="#" class="login-form__link-small">
+					Vous avez oublié votre nom d'utilisateur ?
+				</a>
+				@if (successMessage) {
+					<p class="login-form__success">{{ successMessage }}</p>
+				}
+		  
+				@if (errorMessage) {
+					<p class="login-form__error login-form__error--global">
+						{{ errorMessage }}
+					</p>
+				}
+			</form>
+		</div>
+		<footer class="login-footer">
+			Copyright © CoopHub.eu, 2016–2024 |
+			<a href="#">Conditions d'utilisations</a>
+		</footer>
+	</section>
+</div>
